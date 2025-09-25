@@ -23,8 +23,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
       <head>
         <InitTheme />
-        <link href="/favicon.ico" rel="icon" sizes="32x32" />
-        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        <link href="/media/icono-festivalle.png" rel="icon" sizes="32x32" />
       </head>
       <body>
         <Providers>
@@ -35,7 +34,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
 
           <Header />
-          {children}
+            <div className='my-6'>
+            <img src="/media/presentation-image.png" alt='presentation image' className='shadow-xl'></img>
+            </div>
           <Footer />
         </Providers>
       </body>

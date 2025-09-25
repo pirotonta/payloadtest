@@ -1,29 +1,26 @@
 import clsx from 'clsx'
 import React from 'react'
 
-interface Props {
-  className?: string
-  loading?: 'lazy' | 'eager'
-  priority?: 'auto' | 'high' | 'low'
-}
+type Props = {
+  loading?: "lazy" | "eager";
+  priority?: "high" | "low";
+  size?: "header" | "footer";
+  className?: string;
+};
 
-export const Logo = (props: Props) => {
-  const { loading: loadingFromProps, priority: priorityFromProps, className } = props
-
-  const loading = loadingFromProps || 'lazy'
-  const priority = priorityFromProps || 'low'
+export const Logo = ({loading,priority, size = "header", className}: Props) => {
+const sizeClasses = size === "header" 
+    ? 'max-w-[25rem] h-[60px]'  // tamaño del logo en el header
+    : 'max-w-[20rem] h-[44px]'; // tamaño del logo en el footer
 
   return (
-    /* eslint-disable @next/next/no-img-element */
-    <img
-      alt="Payload Logo"
-      width={193}
-      height={34}
+   <img
+      alt="Festivalle logo"
       loading={loading}
       fetchPriority={priority}
       decoding="async"
-      className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
-      src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-logo-light.svg"
+      className={clsx('w-full', sizeClasses, className)}
+      src="/media/logo-festivalle.png"
     />
   )
 }
