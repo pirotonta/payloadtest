@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { AuthProvider } from "../../context/AuthContext"
 
 import { cn } from '@/utilities/ui'
 import { GeistMono } from 'geist/font/mono'
@@ -26,6 +27,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link href="/media/icono-festivalle.png" rel="icon" sizes="32x32" />
       </head>
       <body>
+        <AuthProvider>
         <Providers>
           <AdminBar
             adminBarProps={{
@@ -34,11 +36,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
 
           <Header />
-            <div className='my-6'>
-            <img src="/media/presentation-image.png" alt='presentation image' className='shadow-xl'></img>
-            </div>
+            {children}
           <Footer />
         </Providers>
+        </AuthProvider>
       </body>
     </html>
   )
