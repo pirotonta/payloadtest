@@ -1,6 +1,6 @@
 'use client'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import type { Page } from '@/payload-types'
 
@@ -10,10 +10,72 @@ import RichText from '@/components/RichText'
 
 export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText }) => {
   const { setHeaderTheme } = useHeaderTheme()
+  const [mounted, setMounted] = useState(false)
+  
+  const hasMedia = media && typeof media === 'object'
 
   useEffect(() => {
-    setHeaderTheme('dark')
-  })
+    setMounted(true)
+    setHeaderTheme(hasMedia ? 'dark' : 'light')
+  }, [hasMedia, setHeaderTheme])
+
+  if (!mounted) {
+    return (
+      <div className="py-24">
+        <div className="container">
+          <div className="max-w-4xl mx-auto text-center">
+            {richText && (
+              <RichText 
+                className="mb-8 text-black" 
+                data={richText} 
+                enableGutter={false} 
+              />
+            )}
+            {Array.isArray(links) && links.length > 0 && (
+              <ul className="flex justify-center gap-4 flex-wrap">
+                {links.map(({ link }, i) => {
+                  return (
+                    <li key={i}>
+                      <CMSLink {...link} />
+                    </li>
+                  )
+                })}
+              </ul>
+            )}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (!hasMedia) {
+    return (
+      <div className="py-24">
+        <div className="container">
+          <div className="max-w-4xl mx-auto text-center">
+            {richText && (
+              <RichText 
+                className="mb-8 text-black" 
+                data={richText} 
+                enableGutter={false} 
+              />
+            )}
+            {Array.isArray(links) && links.length > 0 && (
+              <ul className="flex justify-center gap-4 flex-wrap">
+                {links.map(({ link }, i) => {
+                  return (
+                    <li key={i}>
+                      <CMSLink {...link} />
+                    </li>
+                  )
+                })}
+              </ul>
+            )}
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div
@@ -37,9 +99,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
         </div>
       </div>
       <div className="min-h-[80vh] select-none">
-        {media && typeof media === 'object' && (
-          <Media fill imgClassName="-z-10 object-cover" priority resource={media} />
-        )}
+        <Media fill imgClassName="-z-10 object-cover" priority resource={media} />
       </div>
     </div>
   )

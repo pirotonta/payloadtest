@@ -53,7 +53,6 @@ export default async function Post({ params: paramsPromise }: Args) {
     <article className="pt-16 pb-16">
       <PageClient />
 
-      {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
 
       {draft && <LivePreviewListener />}
